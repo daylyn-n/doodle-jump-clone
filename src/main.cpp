@@ -1,73 +1,51 @@
 #include <SFML/Graphics.hpp>
+#include <time.h>
 using namespace sf;
+
+struct Point{int x,y;};
 int main()
 {
-
-    RenderWindow window(VideoMode(1280, 720), "Prgoram!");
+    srand(time(0));
+    RenderWindow window(VideoMode(400,533), "Pibble jump");
     window.setFramerateLimit(60);
-    RectangleShape rect;
-    
-    // declare a variable for the position
-    Vector2f rectanglePosition(600,360); // Vector2f is a vector that holds 2 floating point values, just some struct
 
-    rect.setPosition(rectanglePosition);
-    rect.setSize(Vector2f(100,100));
+    Texture t1,t2,t3;
+    t1.loadFromFile("images/background.png");
+    t2.loadFromFile("images/pibble.png");
+    t3.loadFromFile("images/jesse-plat.png");
 
-    float xVelocity = 0;
-    float yVelocity = 0;
-    // without this while loop, the window would just close
-    while (window.isOpen())
-    {
-        Event event;
-        while (window.pollEvent(event)) // pollEvent returns true, essentially looping over the event unitl otherwise
-        {
-            if (event.type == Event::Closed) // this ends the event (application)
-                window.close();
-
-            if(Keyboard::isKeyPressed(Keyboard::Escape)) window.close();
-
-            if(Keyboard::isKeyPressed(Keyboard::Up)){
-                rect.move(0,-20);
-                yVelocity -=20;
-            }
-            if(Keyboard::isKeyPressed(Keyboard::Down)){
-                rect.move(0,20);
-                 yVelocity +=20;
-            }
-            if(Keyboard::isKeyPressed(Keyboard::Left)){
-                rect.move(-20,0);
-                xVelocity -=20;
-            }
-             if(Keyboard::isKeyPressed(Keyboard::Right)){
-                 // rect.move(20,0);
-                xVelocity +=20;
-            }
-        }
-
-        //motion
-
-        // bounds checking so it doesnt fly off the screen
-        if(rectanglePosition.x < 0 || rectanglePosition.x > 1280 - 100) xVelocity *=-1; // look at window size, 100 comes from the rect size
-        if(rectanglePosition.y < 0 || rectanglePosition.y > 720 - 100) yVelocity *=-1;
-
-        rectanglePosition.x = xVelocity;
-        rectanglePosition.y = yVelocity;
-        rect.setPosition(rectanglePosition);
-
-
-
-
-        //render
-        window.clear(); // needed
-
-        
-        window.draw(rect);
-        
-        
-        window.display(); // needed
-    }
+    Sprite sBackground(t1), sPers(t2), sPlat(t3);
 
    
+    
+   // sBackground.setTextureRect(IntRect(0,0, window.getSize().x , window.getSize().y));
+    //sPers.setPosition(window.getSize().x/2.f - sPers.getGlobalBounds().width/2.f,
+     //                 window.getSize().y - sPers.getGlobalBounds().height - 50.f);
+
+    Point plat[20];
+
+    // randomness for platform gen
+    for(int i = 0; i < 10;i++){
+        plat[i].x = rand()% (int)(window.getSize().x - sPlat.getGlobalBounds().width);
+        plat[i].y = rand() % (int)(window.getSize().x - sPlat.getGlobalBounds().height);
+    }
+
+    while(window.isOpen()){
+        Event event;
+        while(window.pollEvent(event)){
+            if(event.type == Event::Closed) window.close();
+
+        }
+       window.clear(Color::White);
+
+        window.draw(sBackground);
+        window.draw(sPers);
+        for(int i =0; i < 10; i++){
+            sPlat.setPosition((float)plat[i].x,(float)plat[i].y);
+            window.draw(sPlat);
+        }
+        window.display();
+    }
 
     return 0;
 }
