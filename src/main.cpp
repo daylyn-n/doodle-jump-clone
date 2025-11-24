@@ -16,12 +16,6 @@ int main()
 
     Sprite sBackground(t1), sPers(t2), sPlat(t3);
 
-   
-    
-   // sBackground.setTextureRect(IntRect(0,0, window.getSize().x , window.getSize().y));
-    //sPers.setPosition(window.getSize().x/2.f - sPers.getGlobalBounds().width/2.f,
-     //                 window.getSize().y - sPers.getGlobalBounds().height - 50.f);
-
     Point plat[20];
 
     float dx = 0;
@@ -61,7 +55,7 @@ float platH = sPlat.getGlobalBounds().height;
         else
             sPers.setScale(1.f, 1.f);  // normal
         
-        // always jumping
+        // always falling
         dy+=0.2;
         y+=dy;
         if(y > 500 ) dy=-10;
