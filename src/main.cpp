@@ -23,9 +23,9 @@ int main()
     int x = 100, y = 100, h =100;
 
     float playerW = sPers.getGlobalBounds().width;
-float playerH = sPers.getGlobalBounds().height;
-float platW = sPlat.getGlobalBounds().width;
-float platH = sPlat.getGlobalBounds().height;
+    float playerH = sPers.getGlobalBounds().height;
+    float platW = sPlat.getGlobalBounds().width;
+    float platH = sPlat.getGlobalBounds().height;
 
 
 
